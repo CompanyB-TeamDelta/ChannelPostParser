@@ -70,6 +70,9 @@ def convert_message_to_request(message):
     if "is_backfill" in message.keys():
         is_backfill = message["is_backfill"]
 
+    if "is_live_monitored" in message.keys():
+        is_live_monitored = message["is_live_monitored"]
+
     try:
         if "from" in message.keys() and "to" in message.keys():
             _from_date_str = message["from"]
