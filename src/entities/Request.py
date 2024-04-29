@@ -12,11 +12,12 @@ class RequestCode(Enum):
 
 
 class RequestData:
-    def __init__(self, channels: List[Any], name: str, params: Dict, is_backfill: bool):
+    def __init__(self, channels: List[Any], name: str, params: Dict, is_backfill: bool, is_live_monitored: bool):
         self._channels = channels
         self._name = name
         self._params = params
         self._is_backfill = is_backfill
+        self.is_live_monitored = is_live_monitored
 
     @property
     def channels(self) -> List:
@@ -50,12 +51,21 @@ class RequestData:
     def is_backfill(self, is_backfill: bool) -> None:
         self._is_backfill = is_backfill
 
+    @property
+    def is_live_monitored(self) -> bool:
+        return self._is_backfill
+
+    @is_live_monitored.setter
+    def is_live_monitored(self, is_backfill: bool) -> None:
+        self._is_backfill = is_backfill
+
     def to_json(self) -> Dict:
         return {
             "channels": self._channels,
             "name": self._name,
             "params": self._params,
             "is_backfill": self._is_backfill,
+            "is_live_monitored": self.is_live_monitored
         }
 
     def __str__(self):
