@@ -45,6 +45,8 @@ async def handle_request(
                 
                 if request_to_handle.data.is_backfill == True:
                     response_queue.send_message(response)
+                    if request_to_handle.data.is_live_monitored == True:
+                        analytics_response_queue.send_message(response)
                 else:
                     live_response_queue.send_message(response)
                     analytics_response_queue.send_message(response)
