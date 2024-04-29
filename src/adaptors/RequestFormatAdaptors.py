@@ -46,7 +46,7 @@ def convert_predefined_config_to_request(predefined_config) -> Request:
         error_msg = "No is_backfill in predefined config"
 
     rdata = RequestData(
-        channels=channels, name=name, params=params, is_backfill=is_backfill
+        channels=channels, name=name, params=params, is_backfill=is_backfill, is_live_monitored=False
     )
     ret_request = Request(code=result, data=rdata, rid=0, error_msg=error_msg)
     return ret_request
@@ -60,6 +60,7 @@ def convert_message_to_request(message):
     name = "get_posts_by_date_range"
     params = {}
     is_backfill = False
+    is_live_monitored = False
 
     if "telegram_channel_id" in message.keys():
         channels = [message["telegram_channel_id"]]
@@ -90,7 +91,7 @@ def convert_message_to_request(message):
         logger.error(f"Error occured during date conversation: {e}")
 
     rdata = RequestData(
-        channels=channels, name=name, params=params, is_backfill=is_backfill
+        channels=channels, name=name, params=params, is_backfill=is_backfill, is_live_monitored=is_live_monitored
     )
     ret_request = Request(code=result, data=rdata, rid=0, error_msg=error_msg)
     return ret_request
